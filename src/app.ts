@@ -33,9 +33,9 @@ class App {
             next();
         });
 
-        this.server.use((req, res, next) => {
-            res.render("maintenance.hbs");
-        });
+        // this.server.use((req, res, next) => {
+        //     res.render("maintenance.hbs");
+        // });
 
         this.server.use(express.static(path.join(__dirname + "/public")));
 
