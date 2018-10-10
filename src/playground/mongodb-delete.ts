@@ -36,7 +36,7 @@ async function connect() {
 
                 console.log(JSON.stringify(person));
             }
-            //console.log(result.length);
+            // console.log(result.length);
 
         } catch (error) {
             console.log(error);
