@@ -30,6 +30,7 @@
     "@types/jest": "^22.2.3",
     "@types/lodash": "^4.14.116",
     "@types/mongodb": "^3.1.10",
+    "@types/mongoose": "^5.2.19",
     "@types/node": "^10.10.3",
     "@types/shelljs": "^0.8.0",
     "@types/supertest": "^2.0.6",
@@ -42,7 +43,7 @@
     "tslint": "^5.11.0",
     "typescript": "^2.9.2"
   },
-  "dependencies": {
+  "dependencies": {    
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
     "errorhandler": "^1.5.0",
@@ -52,6 +53,7 @@
     "hbs": "^4.0.1",
     "lodash": "^4.17.11",
     "mongodb": "^3.1.6",
+    "mongoose": "^5.3.3",
     "save-dev": "^2.0.0",
     "shelljs": "^0.8.2"
   },

@@ -4,11 +4,16 @@ import session from "express-session";
 import bodyParser from "body-parser";
 import path from "path";
 import expressValidator from "express-validator";
+import mongoose from "mongoose";
+
+
+import { Todo, ITodoModel } from "./Models/Todo";
 
 import { person, errorMessage } from "./person";
 
 import * as se from "hbs";
-import fs from "fs";
+import fs, { promises } from "fs";
+import { ITodo } from "./Interfaces/ITodo";
 
 class App {
     public server: express.Express;
@@ -26,18 +31,41 @@ class App {
         this.server.use(expressValidator());
         this.server.set("port", process.env.PORT || 3000);
 
+        (<any>mongoose).Promise = global.Promise;
+        mongoose.connect("mongodb://localhost:27017/TodoApp").then(
+            () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
+        ).catch(err => {
+            console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
+            // process.exit();
+        });
+
+
         this.server.use((req, res, next) => {
             const log = `${new Date().toString()}: ${req.url} ${req.method} ${res.statusCode}\n`;
             fs.appendFile(new Date().toDateString(), log, () => { });
             console.log(log);
+
+            this.saveTodo();
+            console.log("saved");
             next();
         });
+
 
         // this.server.use((req, res, next) => {
         //     res.render("maintenance.hbs");
         // });
 
         this.server.use(express.static(path.join(__dirname + "/public")));
+
+        this.server.post("/todos", (req, res) => {
+            const todo = new Todo(req.body);
+            todo.save().then((doc) => {
+                res.send(doc);
+            }, (e) => {
+                res.status(400);
+                res.send(e);
+            });
+        });
 
         this.server.get("/about", (req, res) => {
             // res.send("Hello Express!");
@@ -67,6 +95,24 @@ class App {
         });
         this.server.use("/", router);
     }
+
+    private async saveTodo() {
+        const newTodo = new Todo();
+        newTodo.text = "Serkan";
+        newTodo.completed = false;
+        newTodo.completedAt = new Date().getTime();
+
+        const result = await newTodo.save();
+
+        console.log(JSON.stringify(result));
+    }
+
+
+
+
+
+
+
 
 }
 
