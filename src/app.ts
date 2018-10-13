@@ -45,7 +45,7 @@ class App {
             fs.appendFile(new Date().toDateString(), log, () => { });
             console.log(log);
 
-            this.saveTodo();
+            // this.saveTodo();
             console.log("saved");
             next();
         });
