@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express from "express";
 import compression from "compression";
 import session from "express-session";
 import bodyParser from "body-parser";
@@ -7,13 +7,13 @@ import expressValidator from "express-validator";
 import mongoose from "mongoose";
 
 
-import { Todo, ITodoModel } from "./Models/Todo";
+import { Todo } from "./Models/Todo";
 
 import { person, errorMessage } from "./person";
 
 import * as se from "hbs";
-import fs, { promises } from "fs";
-import { ITodo } from "./Interfaces/ITodo";
+import fs from "fs";
+
 
 class App {
     public server: express.Express;
