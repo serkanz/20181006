@@ -67,6 +67,15 @@ class App {
             });
         });
 
+        this.server.get("/todos", (req, res) => {
+            Todo.find().then((doc) => {
+                res.send({ doc });
+            }, (e) => {
+                res.status(400);
+                res.send(e);
+            });
+        });
+
         this.server.get("/about", (req, res) => {
             // res.send("Hello Express!");
             res.render("about.hbs", { deneme: person.serkan(12) });
