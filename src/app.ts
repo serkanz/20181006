@@ -86,7 +86,10 @@ class App {
             else {
                 Todo.findById(new ObjectID(id)).then(
                     (doc) => {
-                        res.send({ doc });
+                        if (doc != undefined)
+                            res.send({ doc });
+                        else
+                            res.status(404).send({});
                     }, (e) => {
                         res.status(404);
                         res.send({ e });
