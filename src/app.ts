@@ -13,6 +13,7 @@ import { person, errorMessage } from "./person";
 
 import * as se from "hbs";
 import fs from "fs";
+import { ObjectID } from "mongodb";
 
 
 class App {
@@ -74,6 +75,28 @@ class App {
                 res.status(400);
                 res.send(e);
             });
+        });
+
+        this.server.get("/todos/:id", (req, res) => {
+            const id = req.params.id;
+            if (!ObjectID.isValid(id)) {
+                res.status(404);
+                res.send({});
+            }
+            else {
+                Todo.findById(new ObjectID(id)).then(
+                    (doc) => {
+                        res.send({ doc });
+                    }, (e) => {
+                        res.status(404);
+                        res.send({ e });
+                    }
+                ).catch((e) => {
+                    res.status(500);
+                    res.send(e);
+                }
+                );
+            }
         });
 
         this.server.get("/about", (req, res) => {
